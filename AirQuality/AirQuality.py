@@ -6,3 +6,7 @@ pio.templates.default = "plotly_white"
 
 data = pd.read_csv("delhiaqi.csv")
 print(data.head())
+
+data['date'] = pd.to_datetime(data['date'])
+
+print(data.describe())
