@@ -40,5 +40,25 @@ def calculate_overall_aqi(row):
         if aqi is not None:
             aqi_values.append(aqi)
     return max(aqi_values)
+
+# Calculate AQI for each row
+data['AQI'] = data.apply(calculate_overall_aqi, axis=1)
+
+# Define AQI categories
+aqi_categories = [ 
+    (0, 50, 'Good'), (51, 100, 'Moderate'), (101, 150, 'Unhealthy for Sensitive Groups'), (151, 200, 'Unhealthy'), (201, 300, 'Very Unhealthy'), (301, 500, 'Hazardous')]
+
+def categorize_aqi(aqi_value): 
+    for low, high, category in aqi_categories:
+        if low <= aqi_value <= high:
+            return category
+    return None
+
+# Categorize AQI
+data['AQI Category'] = data['AQI'].apply(categorize_aqi)
+print(data.head())
+
+    
+        
     
         
